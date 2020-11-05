@@ -69,4 +69,25 @@ public class LibroDaoHashMap implements LibroDao {
 		return isAnadido;
 	}
 
+	@Override
+	public boolean modify(Libro l) {
+		boolean nombreCoincide = true;
+
+		for (Iterator<Integer> iterator = hmLibros.keySet().iterator(); iterator.hasNext();) {
+			int key = (Integer) iterator.next();
+			Libro libro = hmLibros.get(key);
+			nombreCoincide = (libro.getNombre().equalsIgnoreCase(l.getNombre()) && libro.getId() != l.getId()) ? true
+					: false;
+			if (nombreCoincide) {
+				break;
+			}
+		}
+
+		if (!nombreCoincide) {
+			hmLibros.put(l.getId(), l);
+		}
+
+		return nombreCoincide;
+	}
+
 }
