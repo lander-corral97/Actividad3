@@ -63,6 +63,8 @@ public class LibroDAOSqlite implements LibroDao {
 
 			pst.setInt(1, id);
 
+			System.out.println(pst);
+
 			try (ResultSet rs = pst.executeQuery()) {
 
 				while (rs.next()) {

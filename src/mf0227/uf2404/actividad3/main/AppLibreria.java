@@ -27,6 +27,7 @@ public class AppLibreria extends AppGestion {
 	private final static String OP_NOMBRE = "1";
 	private final static String OP_NUMPAG = "2";
 
+	private final static String SI_BORRAR = "S";
 	private final static String NO_SEGUIR = "N";
 
 	private static Scanner sc = new Scanner(System.in);
@@ -148,6 +149,7 @@ public class AppLibreria extends AppGestion {
 		int id = 0;
 		boolean correcto = false;
 		boolean eliminado;
+		String borrar = "";
 
 		do {
 			System.out.println("Introduce el id a eliminar");
@@ -162,16 +164,21 @@ public class AppLibreria extends AppGestion {
 			}
 		} while (!correcto);
 
-		try {
-			eliminado = dao.delete(id);
+		System.out.println("¿Estás seguro de que quieres borrar? (S/N)");
+		borrar = sc.nextLine().toUpperCase();
 
-			if (eliminado) {
-				System.out.println("Libro eliminado");
-			} else {
-				System.err.println("No se ha encontrado al libro cuyo id es " + id);
+		if (SI_BORRAR.equals(borrar)) {
+			try {
+				eliminado = !dao.delete(id);
+
+				if (eliminado) {
+					System.out.println("Libro eliminado");
+				} else {
+					System.err.println("No se ha encontrado al libro cuyo id es " + id);
+				}
+			} catch (Exception e) {
+				System.err.println("Error: " + e.getMessage()); // Sin BBDD no entra aquí
 			}
-		} catch (Exception e) {
-			System.err.println("Error: " + e.getMessage()); // Sin BBDD no entra aquí
 		}
 	}
 
